@@ -11,7 +11,7 @@
 *.gch
 *.pch
 
-# Compiled Dynamic libraries
+# Co/* code */mpiled Dynamic libraries
 *.so
 *.dylib
 *.dll
@@ -27,9 +27,7 @@
 *.lib
 
 # Executables
-*.exe
-*.out
-*.app
+bin/
 
 # Text Editor Directories
 .vscode/
