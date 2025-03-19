@@ -22,8 +22,8 @@ many times as the byte values have been provided.
 
 ### Wipe a file with the Bruce Schneier's algorithm
 
-``bin/true-privacy-info-remover file-to-overwrite.txt``
+``bin/true_privacy_info_remover file_to_overwrite.txt``
 
 ### Wipe a file with the provided byte values
 
-``bin/true-privacy-info-remover file-to-overwrite.txt byte-values.txt``
+``bin/true_privacy_info_remover file_to_overwrite.txt byte_values.txt``
