@@ -52,7 +52,7 @@ int main(int argc, const char* argv[]) {
     else {
         fstream overwritingValues;
         if (OpenFile(argv[2], ios::in, overwritingValues)) {
-            CloseFile(argv[2], overwritingValues);
+            CloseFile(argv[2], fileToOverwrite);
             return -1;
         }
     }
