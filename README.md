@@ -7,8 +7,8 @@ The tool allows a user to apply **the Bruce Schneier's algorithm** or
 overwrite a file with the provided byte values.
 
 **The Bruce Schneier's algorithm** wipes a file **seven times**. The
-first pass overwrites the file with the bit pattern **"00"**, the
-second with **"11"**, and the next five with a randomly generated bit
+first pass overwrites the file with the bit pattern **"11"**, the
+second with **"00"**, and the next five with a randomly generated bit
 pattern.
 
 If you offer byte values to wipe a file, it will be overwritten as
