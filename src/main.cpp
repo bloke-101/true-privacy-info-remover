@@ -2,13 +2,14 @@
 #include <fstream>
 #include <iostream>
 
+#include "file_system_utils.h"
+
 using std::ios;
 using std::cin;
 using std::cout;
 using std::cerr;
 using std::string;
 using std::fstream;
-using std::ifstream;
 
 
 bool IsArgsInRange(int argc) {
@@ -16,13 +17,13 @@ bool IsArgsInRange(int argc) {
 }
 
 void ShowHelpMessage() {
-    string message {"This tool is meant to wipe files " 
+    string message {"This tool is meant to wipe files "
         "by overwriting them.\n\n"
 
         "The tool supports the following modes:\n"
         "1. Overwriting a file with the Bruce Schneier's algorithm.\n"
         "2. Overwriting a file with the provided byte values.\n\n"
-        
+
         "Use-cases:\n"
         "1. true_privacy_info_remover file-to-overwrite\n"
         "2. true_privacy_info_remover file-to-overwrite byte-values.txt"
@@ -31,17 +32,8 @@ void ShowHelpMessage() {
 }
 
 void ShowWrongArgsMessage() {
-    cout << "Wrong CLI arguments!\nRead the help message.\n";
+    cout << "Wrong CLI arguments!\nRead the help message.\n\n";
     ShowHelpMessage();
-}
-
-bool OpenFile(const string& name, ios::openmode mode, fstream& fs) {
-    fs.open(name, mode);
-    if (!fs) {
-        cerr << "Failed to open " << name << '\n';
-        return false;
-    }
-    return true;
 }
 
 int main(int argc, const char* argv[]) {
@@ -55,13 +47,14 @@ int main(int argc, const char* argv[]) {
         return -1;
     }
     if (argc == 2) {
-        
-    } 
-    else if (argc == 3) {
+
+    }
+    else {
         fstream overwritingValues;
         if (OpenFile(argv[2], ios::in, overwritingValues)) {
+            CloseFile(argv[2], overwritingValues);
             return -1;
-        }        
+        }
     }
     return 0;
 }
