@@ -10,18 +10,20 @@ using std::string;
 using std::fstream;
 
 
-bool OpenFile(const string& name, ios::openmode mode, fstream& fs) {
+int OpenFile(const string& name, ios::openmode mode, fstream& fs) {
     fs.open(name, mode);
     if (!fs) {
         cerr << "Failed to open " << name << '\n';
-        return false;
+        return -1;
     }
-    return true;
+    return 0;
 }
 
-void CloseFile(const string& name, fstream& fs) {
+int CloseFile(const string& name, fstream& fs) {
     fs.close();
     if (fs.fail()) {
         cerr << "Failed to close " << name << '\n';
+        return -1;
     }
+    return 0;
 }
