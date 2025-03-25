@@ -27,3 +27,22 @@ int CloseFile(const string& name, fstream& fs) {
     }
     return 0;
 }
+
+int GetFileSize(fstream& file, int& size) {
+    file.seekg(0, ios::end);
+    if (file.fail()) {
+        cerr << "Failed to move the file pointer to the end\n";
+        return -1;
+    }
+    size = file.tellg();
+    if (file.fail()) {
+        cerr << "Failed to get the file pointer position\n";
+        return -1;
+    }
+    file.seekg(0, ios::beg);
+    if (file.fail()) {
+        cerr << "Failed to move the file pointer to the begin\n";
+        return -1;
+    }
+    return 0;
+}
