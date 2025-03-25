@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 
+#include "random_generator.h"
 #include "file_system_utils.h"
 
 using std::ios;
@@ -11,13 +12,16 @@ using std::cerr;
 using std::string;
 using std::fstream;
 
+using str = const string;
 
-bool IsArgsInRange(int argc) {
-    return argc > 1 && argc < 4;
-}
+
+enum class RemovingMode {
+    BruceSchneier = 2,
+    UserValues
+};
 
 void ShowHelpMessage() {
-    string message {"This tool is meant to wipe files "
+    str message {"This tool is meant to wipe files "
         "by overwriting them.\n\n"
 
         "The tool supports the following modes:\n"
@@ -36,25 +40,37 @@ void ShowWrongArgsMessage() {
     ShowHelpMessage();
 }
 
-int main(int argc, const char* argv[]) {
-    if (!IsArgsInRange(argc)) {
-        ShowWrongArgsMessage();
-        return 0;
-    }
-    fstream fileToOverwrite;
+int RemoveFileWithBSAlgorithm(str& filePath) {
     ios::openmode mode = ios::in | ios::out | ios::binary;
-    if (OpenFile(argv[1], mode, fileToOverwrite)) {
+    fstream fileToRemove;
+    if (OpenFile(filePath, mode, fileToRemove) == -1) {
         return -1;
     }
-    if (argc == 2) {
-
+    if (Overwrite(fileToRemove, 255) == -1) {
+        return -1;
     }
-    else {
-        fstream overwritingValues;
-        if (OpenFile(argv[2], ios::in, overwritingValues)) {
-            CloseFile(argv[2], fileToOverwrite);
+    if (Overwrite(fileToRemove, 0) == -1) {
+        return -1;
+    }
+    PRNG generator;
+    initGenerator(generator);
+    for (int i = 0; i < 5; i++) {
+        if (Overwrite(fileToRemove, random(generator, 0, 255)) == -1) {
             return -1;
         }
+    }
+    return CloseFile(filePath, fileToRemove);
+}
+
+int main(int argc, const char* argv[]) {
+    RemovingMode mode = static_cast<RemovingMode>(argc);
+    switch(mode) {
+        case RemovingMode::BruceSchneier:
+            return RemoveFileWithBSAlgorithm(argv[1]);
+        case RemovingMode::UserValues:
+            break;
+        default:
+            ShowWrongArgsMessage();
     }
     return 0;
 }
