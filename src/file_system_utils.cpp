@@ -81,4 +81,5 @@ int ReadByte(fstream& file) {
         cerr << "'" << number << "' is not a byte\n";
         return -1;
     }
+    return number;
 }
