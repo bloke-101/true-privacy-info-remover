@@ -62,13 +62,39 @@ int RemoveFileWithBSAlgorithm(str& filePath) {
     return CloseFile(filePath, fileToRemove);
 }
 
+int RemoveFileWithUserValues(str& filePath, str& userValuePath) {
+    ios::openmode mode = ios::in | ios::out | ios::binary;
+    fstream fileToRemove;
+    if (OpenFile(filePath, mode, fileToRemove) == -1) {
+        return -1;
+    }
+    fstream userValues;
+    if (OpenFile(userValuePath, ios::in, userValues) == -1) {
+        CloseFile(filePath, fileToRemove);
+        return -1;
+    }
+    int userValue;
+    while (!userValues.eof()) {
+        if ((userValue = ReadByte(userValues)) == -1) {
+            return -1;
+        }
+        if (Overwrite(fileToRemove, userValue) == -1) {
+            return -1;
+        }
+    }
+    if (CloseFile(filePath, fileToRemove) == -1) {
+        return CloseFile(userValuePath, userValues);
+    }
+    return CloseFile(userValuePath, userValues);
+}
+
 int main(int argc, const char* argv[]) {
     RemovingMode mode = static_cast<RemovingMode>(argc);
     switch(mode) {
         case RemovingMode::BruceSchneier:
             return RemoveFileWithBSAlgorithm(argv[1]);
         case RemovingMode::UserValues:
-            break;
+            return RemoveFileWithUserValues(argv[1], argv[2]);
         default:
             ShowWrongArgsMessage();
     }
