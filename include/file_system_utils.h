@@ -9,6 +9,6 @@ int CloseFile(const string& name, fstream& file);
 
 int GetFileSize(fstream& file, int& size);
 
-int Overwrite(fstream& file, char c);
+int Overwrite(fstream& file, int c);
 
 int ReadByte(fstream& file);

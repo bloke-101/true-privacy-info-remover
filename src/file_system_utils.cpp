@@ -47,7 +47,7 @@ int GetFileSize(fstream& file, int& size) {
     return 0;
 }
 
-int Overwrite(fstream& file, char c) {
+int Overwrite(fstream& file, int c) {
     int size;
     if (GetFileSize(file, size) == -1) {
         return -1;
