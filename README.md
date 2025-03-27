@@ -16,7 +16,7 @@ many times as the byte values have been provided.
 
 ## How to build the tool
 
-``chmod +x build.sh && ./build.sh``
+``make build``
 
 ## How to run the tool
 
